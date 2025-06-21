@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build --base=/goit-js-hw-12/",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postinstall": "npx patch-package"
+  },
+  "name.null.unused": {
+    "patch-package": "^8.0.0"
   },
   "devDependencies": {
     "glob": "^11.0.0",
