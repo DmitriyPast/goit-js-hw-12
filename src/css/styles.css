@@ -217,7 +217,7 @@ body {
 
 .gallery {
   /*  */
-  width: calc(100% - mod(100%, 360px + 24px));
+  width: calc(100% - mod(100%, 360px + 24px) - 24px);
   /* transform: translateX(calc(20% - 200px)); */
   /* margin-left: 200px; */
   list-style-type: none;
