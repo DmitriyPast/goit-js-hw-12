@@ -39,7 +39,7 @@ form.addEventListener('submit', search => {
     //   });
   } else
     iziToast.error({
-      message: 'red',
+      message: 'Введіть пошуковий запит.',
       position: 'topRight',
     });
 });
