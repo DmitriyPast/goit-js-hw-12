@@ -13,7 +13,7 @@ const gallery = document.querySelector('ul.gallery');
 // createGallery(images). Ця функція повинна приймати масив images, створювати HTML-розмітку для галереї, додавати її в контейнер галереї та викликати метод екземпляра SimpleLightbox refresh(). Нічого не повертає.
 export function createGallery(images) {
   // clearGallery();
-  hideLoader();
+  // hideLoader();
   // console.log(gallery);
 
   gallery.insertAdjacentHTML(
@@ -50,28 +50,6 @@ export function createGallery(images) {
 
   slb.refresh();
 }
-// gallery.insertAdjacentHTML(
-//   'afterbegin',
-//   images
-//     .map(
-//       ({ preview, original, description }) => `<li class="gallery-item">
-//   <a class="gallery-link" href="${original}">
-//     <img
-//       class="gallery-image"
-//       src="${preview}"
-//       data-source="${original}"
-//       alt="${description}"
-//     />
-//     fuck
-//     <span>1</span>
-//     <span>2</span>
-//     <span>3</span>
-//     <span>4</span>
-//   </a>
-// </li>`
-//     )
-//     .join('')
-// );
 
 // clearGallery(). Ця функція нічого не приймає та повинна очищати вміст контейнера галереї. Нічого не повертає.
 export const clearGallery = () => (gallery.innerHTML = '');

@@ -8,38 +8,22 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
 const form = document.querySelector('form.form');
-let page = 1;
-let searchQuery = '';
+let page = 1,
+  searchQuery = '',
+  totalPages = 0;
 
 form.addEventListener('submit', search => {
   search.preventDefault();
-  page = 1;
+  (page = 1), (totalPages = 0);
   // console.log(search.target.elements[0].value);
-  if (search.target.elements[0].value.trim()) {
-    searchQuery = search.target.elements[0].value.trim();
+  searchQuery = search.target.elements[0].value.trim();
+  if (searchQuery) {
     render.clearGallery();
+
     updatePage();
-    // fetchData(search.target.elements[0].value)
-    //   .then(res => {
-    //     // console.log(res);
-    //     render.hideLoader();
-    //     render.createGallery(res.data.hits);
-    //     if (!res.data.total)
-    //       throw new Error(
-    //         'Sorry, there are no images matching your search query. Please try again!'
-    //       );
-    //   })
-    //   .catch(err => {
-    //     // console.log(err);
-    //     iziToast.error({
-    //       // title: 'Error',
-    //       message: String(err),
-    //       position: 'topRight',
-    //     });
-    //   });
   } else
-    iziToast.error({
-      message: 'Введіть пошуковий запит.',
+    return iziToast.error({
+      message: 'Enter search query.',
       position: 'topRight',
     });
 });
@@ -64,33 +48,24 @@ async function updatePage() {
   render.showLoader();
 
   try {
-    const res = await fetchData(searchQuery, page++),
-      {
-        data: { hits, total, totalHits },
-      } = res;
+    const data = await fetchData(searchQuery, page);
+    totalPages = Math.ceil(data.total / 15);
 
-    // const {
-    //   res,
-    //   res: {
-    //     data: { hits, total, totalHits },
-    //   },
-    // } = { res: await fetchData(search.target.elements[0].value) };
+    // console.log(data);
+    if (!data.total)
+      throw new Error(
+        'Sorry, there are no images matching your search query. Please try again!'
+      );
+    else render.createGallery(data.hits);
 
-    // console.log(res);
-    if (Math.ceil(total / 15) >= page) render.showLoadMoreButton();
+    if (totalPages > page) page++ && render.showLoadMoreButton();
     else
       iziToast.info({
         message: "We're sorry, but you've reached the end of search results.",
         position: 'topRight',
       });
-
-    render.createGallery(res.data.hits);
-    if (!res.data.total)
-      throw new Error(
-        'Sorry, there are no images matching your search query. Please try again!'
-      );
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     // console.log(res, res.data.hits);
     iziToast.error({
       message: String(err),
