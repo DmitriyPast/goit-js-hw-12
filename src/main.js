@@ -8,13 +8,14 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
 const form = document.querySelector('form.form');
-let page = 1,
-  searchQuery = '',
-  totalPages = 0;
+let page = 1;
+let searchQuery = '';
+let totalPages = 0;
 
 form.addEventListener('submit', search => {
   search.preventDefault();
-  (page = 1), (totalPages = 0);
+  page = 1;
+  totalPages = 0;
   // console.log(search.target.elements[0].value);
   searchQuery = search.target.elements[0].value.trim();
   if (searchQuery) {
@@ -49,7 +50,7 @@ async function updatePage() {
 
   try {
     const data = await fetchData(searchQuery, page);
-    totalPages = Math.ceil(data.total / 15);
+    totalPages = Math.ceil(data.totalHits / 15);
 
     // console.log(data);
     if (!data.total)
